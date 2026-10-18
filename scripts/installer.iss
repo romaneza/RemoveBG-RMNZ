@@ -29,8 +29,8 @@ WizardStyle=modern
 UninstallDisplayIcon={app}\{#AppExe}
 
 [Languages]
+; Indonesian.isl tidak termasuk di distribusi resmi Inno Setup, jadi pakai bahasa Inggris saja
 Name: "english"; MessagesFile: "compiler:Default.isl"
-Name: "indonesian"; MessagesFile: "compiler:Languages\Indonesian.isl"
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
