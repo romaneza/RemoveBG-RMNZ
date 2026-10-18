@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+*.egg-info/
+
+# Build (PyInstaller)
+build/
+dist/
+*.spec
+
+# Model & output lokal
+*.onnx
+*.part
+*.log
+*_nobg.png
+*_nobg.jpg
+*.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets
+.env

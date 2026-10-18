@@ -1,0 +1,59 @@
+# Build RemoveBG-RMNZ untuk Windows (.exe + installer) dan macOS (.dmg).
+# Jalan manual (tab Actions -> Run workflow) atau saat push tag v*.
+name: build
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Buat venv & install dependensi
+        shell: pwsh
+        run: |
+          python -m venv .venv
+          .venv\Scripts\python -m pip install --upgrade pip
+          .venv\Scripts\python -m pip install -r requirements.txt
+      - name: Test
+        shell: pwsh
+        run: .venv\Scripts\python -m pytest -q
+      - name: Install Inno Setup
+        shell: pwsh
+        run: choco install innosetup --no-progress -y
+      - name: Build
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File scripts\build_windows.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RemoveBG-RMNZ-windows
+          path: |
+            dist/RemoveBG-RMNZ-Setup.exe
+            dist/RemoveBG-RMNZ-windows.zip
+
+  macos:
+    runs-on: macos-latest   # Apple Silicon (arm64)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Buat venv & install dependensi
+        run: |
+          python -m venv .venv
+          .venv/bin/python -m pip install --upgrade pip
+          .venv/bin/python -m pip install -r requirements.txt
+      - name: Test
+        run: .venv/bin/python -m pytest -q
+      - name: Build
+        run: sh scripts/build_macos.sh
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RemoveBG-RMNZ-macos-arm64
+          path: dist/RemoveBG-RMNZ.dmg

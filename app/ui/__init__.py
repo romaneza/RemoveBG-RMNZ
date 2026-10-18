@@ -1,0 +1,1 @@
+"""UI desktop berbasis PySide6."""

@@ -1,0 +1,10 @@
+[project]
+name = "removebg-rmnz"
+version = "0.1.0"
+description = "RemoveBG-RMNZ: desktop AI background remover for macOS & Windows"
+readme = "README.md"
+requires-python = ">=3.10,<3.13"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
